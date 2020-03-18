@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html style="background-color: gray;">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Welcome to Firebase Hosting</title>
+
+  <link rel="stylesheet" href="css/bulma.css">
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/7.10.0/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/7.10.0/firebase-auth.js"></script>
+  <script defer src="/__/firebase/7.10.0/firebase-database.js"></script>
+  <script defer src="/__/firebase/7.10.0/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/7.10.0/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <style>
+    .bordered {
+      border: 1px solid black;
+    }
+
+    .text-small {
+      font-size: 10px;
+    }
+
+    .atributos .box {
+      padding: 2px;
+    }
+
+    .atributos2 .box {
+      padding: 7px;
+    }
+
+    input[type="checkbox"] {
+      vertical-align: bottom;
+    }
+
+    .input-atributos {
+      width: 100%;
+      border: none;
+      text-align: center;
+      font-size: 20pt;
+    }
+
+    .input-atributos2 {
+      width: 100%;
+      border: none;
+      text-align: center;
+    }
+
+    .box {
+      border: 1px solid black;
+    }
+
+    .marginless .box {
+      margin: 5px;
+    }
+
+    .border-bottom{
+      border: none;
+      border-bottom: 1px solid black;
+    }
+  </style>
+
+</head>
+
+<body>
+  <section class="hero is-fullheight">
+    <div class="hero-body">
+      <div class="container is-fluid">
+        <!----------------------Login------------------------->
+        <div class="column is-4 is-offset-4 logged-out" style="display: block;">
+          <div class="box">
+            <h2 class="has-text-centered title">Login</h2>
+            <form id="form-login">
+              <div class="field">
+                <div class="control">
+                  <label>Email</label>
+                  <input class="input" type="email" id="email-login">
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <label>Senha</label>
+                    <input class="input" type="password" id="senha-login">
+                  </div>
+                </div>
+                <div class="field is-grouped is-grouped-right">
+                  <div class="control">
+                    <button type="submit" class="button">Entrar</button>
+                  </div>
+                  <div class="control">
+                    <a id="login-cadastrar" class="button">Cadastrar</a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!----------------------Login------------------------->
+
+        <!-------------------Modal Cadastro------------------->
+        <div id="modal-cadastro" class="modal">
+          <div class="modal-background"></div>
+          <div class="modal-content">
+            <div class="box">
+              <h2 class="has-text-centered title">Cadastro</h2>
+              <form id="form-cadastro">
+                <div class="field">
+                  <div class="control">
+                    <label>Email</label>
+                    <input class="input" type="email" id="email-cadastro" required>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <label>Senha</label>
+                      <input class="input" type="password" id="senha-cadastro" required>
+                    </div>
+                  </div>
+                  <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                      <button class="button" type="submit">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-------------------Modal Cadastro------------------->
+
+        <div class="logged-in" style="display: none;">
+          <!--------------header----------------->
+          <div class="columns">
+            <div class="column is-5 atributos">
+              <div class="box">
+                <input type="text" class="input-atributos" style="text-align: left;">
+                <label class="label is-small">NOME DO PERSONAGEM</label>
+              </div>
+            </div>
+            <div class="column atributos">
+              <div class="box">
+                <div class="columns">
+                  <div class="column">
+                    <input type="text" class="border-bottom">
+                    <label class="label text-small">CLASSE E NÍVEL</label>
+                    <input type="text" class="border-bottom">
+                    <label class="label text-small">RAÇA</label>
+                  </div>
+                  <div class="column">
+                    <input type="text" class="border-bottom">
+                    <label class="label text-small">ANTECEDENTE</label>
+                    <input type="text" class="border-bottom">
+                    <label class="label text-small">ALINHAMENTO</label>
+                  </div>
+                  <div class="column">
+                    <input type="text" class="border-bottom">
+                    <label class="label text-small">NOME DO JOGADOR</label>
+                    <input type="text" class="border-bottom">
+                    <label class="label text-small">PONTOS DE EXPERIÊNCIA</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--------------header----------------->
+
+          <div class="columns">
+            <!--------------coluna 1----------------->
+            <div class="column">
+              <div class="box" style="height: 100%;">
+                <div class="columns">
+                  <div class="column is-4 has-text-centered text-small atributos">
+                    <div class="box">Força <br><input type="text" class="input-atributos" id=""><br><span>0</span>
+                    </div>
+                    <div class="box">Constituição <br><input type="text" class="input-atributos"
+                        id=""><br><span>0</span>
+                    </div>
+                    <div class="box">Destreza <br><input type="text" class="input-atributos" id=""><br><span>0</span>
+                    </div>
+                    <div class="box">Inteligência <br><input type="text" class="input-atributos"
+                        id=""><br><span>0</span>
+                    </div>
+                    <div class="box">Sabedoria <br><input type="text" class="input-atributos" id=""><br><span>0</span>
+                    </div>
+                    <div class="box">Carisma <br><input type="text" class="input-atributos" id=""><br><span>0</span>
+                    </div>
+                  </div>
+                  <div class="column is-8 text-small atributos2">
+                    <div class="columns">
+                      <div class="column is-4" style="padding-right: 0;">
+                        <div class="box" style="height: 100%; padding: 3px;"><input type="text" class="input-atributos2"
+                            id=""></div>
+                      </div>
+                      <div class="column" style="padding-left: 0;">
+                        <div class="box">Inspiração</div>
+                      </div>
+                    </div>
+                    <div class="columns">
+                      <div class="column is-4" style="padding-right: 0;">
+                        <div class="box" style="height: 100%; padding: 3px;"><input type="text" class="input-atributos2"
+                            id=""></div>
+                      </div>
+                      <div class="column" style="padding-left: 0;">
+                        <div class="box">Bônus de Proficiência</div>
+                      </div>
+                    </div>
+                    <div class="has-text-left">
+                      <div class="box">
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Força
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Destreza
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Constituição
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Inteligencia
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Sabedoria
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Carisma
+                        </label>
+                      </div>
+                      <div class="box">
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Acrobacia (Des)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Arcanismo (Int)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Atletismo (For)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Atuação (Car)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Enganação (Car)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Furtividade (Des)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          História (Int)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Intimidação (Car)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Intuição (Sab)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Investigação (Int)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Lidar com Animais (Sab)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Medicina (Sab)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Natureza (Int)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Percepção (Sab)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Persuasão (Car)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Prestidigitação (Des)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Religião (Int)
+                        </label><br>
+                        <label class="checkbox">
+                          <input type="checkbox">
+                          Sobrevivência (Sab)
+                        </label><br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="columns">
+                  <div class="column">
+                    <div class="columns">
+                      <div class="column is-4" style="padding-right: 0;">
+                        <div class="box" style="height: 100%; padding: 3px;">
+                          <input type="text" class="input-atributos2" id="">
+                        </div>
+                      </div>
+                      <div class="column" style="padding-left: 0;">
+                        <div class="box text-small" style="padding: 7px;">Sabedoria Passiva (Percepção)</div>
+                      </div>
+                    </div>
+                    <div class="box has-text-centered" style="padding: 7px;"><textarea
+                        style="width: 100%; border: none;" id="" rows="5"></textarea><br><strong
+                        class="text-small">OUTRAS
+                        PROFICIÊNCIAS E IDIOMAS</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--------------coluna 1----------------->
+
+            <!--------------coluna 2----------------->
+            <div class="column">
+              <div class="box" style="height: 100%;">
+                <div class="columns">
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box">Classe de Armadura<br><input type="text" class="input-atributos" id=""></div>
+                  </div>
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box">Iniciativa<br><input type="text" class="input-atributos" id=""></div>
+                  </div>
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box">Deslocamento<br><input type="text" class="input-atributos" id=""></div>
+                  </div>
+                </div>
+                <div class="columns">
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box"><input type="text" class="input-atributos"><br>Pontos de Vida Atuais</div>
+                  </div>
+                </div>
+                <div class="columns">
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box"><input type="text" class="input-atributos"><br>Pontos de Vida Temporários</div>
+                  </div>
+                </div>
+                <div class="columns">
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box"><input type="text" class="input-atributos"><br>Dado de Vida</div>
+                  </div>
+                  <div class="column has-text-centered text-small atributos">
+                    <div class="box">Sucessos <input type="checkbox" id="">=<input type="checkbox" id="">=<input
+                        type="checkbox" id=""><br>
+                      Falhas <input type="checkbox" id="">=<input type="checkbox" id="">=<input type="checkbox"
+                        id=""><br>
+                      Salvaguarda contra Morte
+                    </div>
+                  </div>
+                </div>
+                <div class="columns">
+                  <div class="column">
+                    <div class="box has-text-centered text-small" style="padding: 7px;">
+                      <textarea id="" style="width: 100%; border: none;" rows="9"></textarea><br><strong>ATAQUES &
+                        CONJURAÇÃO</strong>
+                    </div>
+                    <div class="box" style="padding: 7px;">
+                      <div class="columns">
+                        <div class="column is-4 marginless atributos text-small">
+                          <div class="box">PC:<input type="text" style="border: none; width: 80%;"></div>
+                          <div class="box">PP:<input type="text" style="border: none; width: 80%;"></div>
+                          <div class="box">PO:<input type="text" style="border: none; width: 80%;"></div>
+                          <div class="box">PE:<input type="text" style="border: none; width: 80%;"></div>
+                          <div class="box">PL:<input type="text" style="border: none; width: 80%;"></div>
+                        </div>
+                        <div class="column marginless">
+                          <textarea id="" rows="10" style="width: 100%; border: none;"></textarea>
+                        </div>
+                      </div>
+                      <div class="has-text-centered">
+                        <strong class="text-small">EQUIPAMENTO</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--------------coluna 2----------------->
+
+            <!--------------coluna 3----------------->
+            <div class="column">
+              <div class="box marginless" style="height: 100%;">
+                <div class="box has-text-centered" style="padding: 7px;"><textarea style="width: 100%; border: none;"
+                    id=""></textarea><br><strong class="text-small">TRAÇOS DE PERSONALIDADE</strong>
+                </div>
+                <div class="box has-text-centered" style="padding: 7px;"><textarea style="width: 100%; border: none;"
+                    id=""></textarea><br><strong class="text-small">IDEAIS</strong>
+                </div>
+                <div class="box has-text-centered" style="padding: 7px;"><textarea style="width: 100%; border: none;"
+                    id=""></textarea><br><strong class="text-small">VÍNCULOS</strong>
+                </div>
+                <div class="box has-text-centered" style="padding: 7px;"><textarea style="width: 100%; border: none;"
+                    id=""></textarea><br><strong class="text-small">FRAQUEZAS</strong>
+                </div>
+                <div class="box has-text-centered" style="padding: 7px;"><textarea style="width: 100%;border: none;"
+                    rows="23" id=""></textarea><br><strong class="text-small">CARACTERÍSTICAS & TALENTOS</strong>
+                </div>
+              </div>
+            </div>
+            <!--------------coluna 3----------------->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script defer src="scripts/index.js"></script>
+  <script defer src="scripts/auth.js"></script>
+  <script defer src="scripts/app.js"></script>
+</body>
+
+</html>
